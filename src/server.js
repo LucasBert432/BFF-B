@@ -24,6 +24,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Health check
+
+app.get("/", (req, res) => {
+  res.status(200).json({
+    service: "bff-financeiro",
+    status: "running",
+  });
+});
 app.get("/health", (req, res) => {
   res.status(200).json({
     status: "OK",
