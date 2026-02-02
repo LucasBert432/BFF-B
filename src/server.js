@@ -6,7 +6,6 @@ require("dotenv").config();
 
 const app = express();
 
-// Middleware
 app.use(helmet());
 app.use(
   cors({
@@ -23,8 +22,6 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Health check
-
 app.get("/", (req, res) => {
   res.status(200).json({
     service: "bff-financeiro",
@@ -39,7 +36,6 @@ app.get("/health", (req, res) => {
   });
 });
 
-// Debug endpoint
 app.get("/debug", (req, res) => {
   res.json({
     message: "BFF funcionando",
@@ -52,19 +48,9 @@ app.get("/debug", (req, res) => {
   });
 });
 
-// Importar rotas - REMOVER DUPLICATAS
-const authRoutes = require("./routes/auth");
-
-// Se você tem arquivo de dashboard, importe aqui
-// const dashboardRoutes = require('./routes/dashboard'); // Descomente se existir
-
-// Usar rotas
+const authRoutes = require("./routes/auth.routes.js");
 app.use("/api/auth", authRoutes);
 
-// Se tiver outras rotas, adicione aqui:
-// app.use('/api/dashboard', dashboardRoutes);
-
-// Error handling middleware
 app.use((err, req, res, next) => {
   console.error("Server error:", err.stack);
   res.status(err.status || 500).json({
