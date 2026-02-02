@@ -17,15 +17,14 @@ const DEMO_USER = {
 const DEMO_PASSWORD = "123456";
 const DEMO_TOKEN = "demo-token";
 
-router.post("/register", (req, res) => {
-  console.log("📝 REGISTER (demo)", req.body);
-
+router.post("/register", (_req, res) => {
   return res.status(200).json({
     success: true,
+    message: "Conta criada com sucesso",
+    error: null,
     data: {
       user: DEMO_USER,
       token: DEMO_TOKEN,
-      message: "Conta criada com sucesso!",
     },
   });
 });
@@ -33,20 +32,20 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
   const { cpf, password } = req.body;
 
-  console.log("🔐 LOGIN attempt:", { cpf });
-
   if (cpf !== DEMO_USER.cpf || password !== DEMO_PASSWORD) {
-    return res.status(401).json({
+    return res.status(200).json({
       success: false,
+      message: "Erro no login",
       error: {
         message: "CPF ou senha inválidos",
-        code: "INVALID_CREDENTIALS",
       },
     });
   }
 
   return res.status(200).json({
     success: true,
+    message: "Login realizado com sucesso",
+    error: null,
     data: {
       user: DEMO_USER,
       token: DEMO_TOKEN,
