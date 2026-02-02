@@ -21,10 +21,13 @@ router.post("/register", (_req, res) => {
   return res.status(200).json({
     success: true,
     message: "Conta criada com sucesso",
-    error: null,
+    error: {
+      message: "",
+      code: null,
+    },
     data: {
       user: DEMO_USER,
-      token: DEMO_TOKEN,
+      token: "demo-token",
     },
   });
 });
@@ -45,10 +48,13 @@ router.post("/login", (req, res) => {
   return res.status(200).json({
     success: true,
     message: "Login realizado com sucesso",
-    error: null,
+    error: {
+      message: "",
+      code: null,
+    },
     data: {
       user: DEMO_USER,
-      token: DEMO_TOKEN,
+      token: "demo-token",
     },
   });
 });
