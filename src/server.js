@@ -4,11 +4,9 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 require("dotenv").config();
 
-const authRoutes = require("./routes/auth.routes");
-const dashboardRoutes = require("./routes/dashboard.routes");
-
 const app = express();
 
+/* ================== MIDDLEWARE ================== */
 app.use(helmet());
 app.use(
   cors({
@@ -19,21 +17,19 @@ app.use(
 app.use(morgan("dev"));
 app.use(express.json());
 
-app.get("/", (_, res) => {
-  res.json({ service: "bff-financeiro", status: "running" });
+/* ================== ROUTES ================== */
+app.get("/", (req, res) => {
+  res.json({ status: "ok", service: "bff-financeiro" });
 });
 
-app.get("/debug", (_, res) => {
-  res.json({ message: "BFF funcionando" });
+app.use("/api/auth", require("./routes/auth.routes"));
+
+/* ================== START SERVER ================== */
+const PORT = Number(process.env.PORT || 8080);
+
+console.log("🔥 Booting server");
+console.log("🌍 PORT:", PORT);
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`🚀 Server running on 0.0.0.0:${PORT}`);
 });
-
-/** 🔑 AQUI */
-app.use("/api/auth", authRoutes);
-app.use("/api/dashboard", dashboardRoutes);
-
-app.use("*", (_, res) => {
-  res.status(404).json({ error: "Route not found" });
-});
-
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => console.log(`🚀 BFF rodando na porta ${PORT}`));

@@ -18,7 +18,7 @@ const authMiddleware = (req, res, next) => {
     // Token válido para demo
     req.user = {
       id: "user-123",
-      name: "Fabricia Silva",
+      name: "Lucas Roberto",
       account: "00012345-6",
     };
     next();
