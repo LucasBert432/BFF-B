@@ -50,7 +50,6 @@ router.post("/login", async (req, res, next) => {
           token: `demo-token-${Date.now()}`,
         };
         users[cleanedCPF] = user; // Armazenar para futuros logins
-        console.log("✅ Novo usuário demo criado:", cleanedCPF);
       }
     }
 
